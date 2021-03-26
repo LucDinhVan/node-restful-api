@@ -65,6 +65,17 @@ const userController = {
                         .then((matched) => {
                             if (matched) {
                                 const token = createToken(storedUser);
+                                res.cookie(
+                                    'token',
+                                    JSON.stringify({
+                                        id: storedUser._id,
+                                        deadline: Math.floor(new Date().getTime() / 1000.0)
+                                    }),
+                                    {
+                                        maxAge: 900000,
+                                        httpOnly: true
+                                    }
+                                );
                                 res.status(200).json({ msg: 'Login Success.', accessToken: token });
                             } else
                                 res.status(401).json({
@@ -77,6 +88,10 @@ const userController = {
                 }
             })
             .catch((e) => res.status(500).json({ error: 'Internal server error.' }));
+    },
+    logout(req, res) {
+        res.clearCookie('token');
+        res.status(200).end();
     },
     emailVerification(req, res) {
         try {
