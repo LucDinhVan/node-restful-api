@@ -25,15 +25,13 @@ app.use(cors);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // router files
-const productRouter = require('./api/router/product');
-const orderRouter = require('./api/router/order');
 const userRouter = require('./api/router/user');
 const keyRouter = require('./api/router/key');
+const routesRouter = require('./api/router/routes');
 
-app.use('/products', productRouter);
-app.use('/orders', orderRouter);
 app.use('/user', userRouter);
 app.use('/keys', keyRouter);
+app.use('/routes', routesRouter);
 
 // No route found error handler
 app.use((req, res, next) => {

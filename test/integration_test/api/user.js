@@ -9,44 +9,10 @@ describe('API - /user', function () {
         email: 'test@mail-xxxx-server.com',
         password: 'test'
     };
-    const invalidEmailSignUp = { email: 'testmail-xxxx-server.com', password: 'test' };
     const incorrectPasswordLogin = { email: 'test@mail-xxxx-server.com', password: 'wrong' };
     const notExistEmailLogin = { email: 'test@not-exist-mail-xxxx-server.com', password: 'test' };
     after(async function () {
         await mongoose.connection.db.dropCollection('users');
-    });
-    describe('POST /singup', function () {
-        it('should responds with email verification', function (done) {
-            client
-                .post('/user/signup')
-                .set('Accept', 'application/json')
-                .set('Content-Type', 'application/json')
-                .send(signupInfo)
-                .expect(
-                    201,
-                    {
-                        userID: signupInfo.email,
-                        status: true
-                    },
-                    done
-                );
-        });
-        it('should responds 409 if email has been taken', function (done) {
-            client
-                .post('/user/signup')
-                .set('Accept', 'application/json')
-                .set('Content-Type', 'application/json')
-                .send(signupInfo)
-                .expect(409, done);
-        });
-        it('should responds 404 if incorrect email format provided', function (done) {
-            client
-                .post('/user/signup')
-                .set('Accept', 'application/json')
-                .set('Content-Type', 'application/json')
-                .send(invalidEmailSignUp)
-                .expect(404, done);
-        });
     });
     describe('POST /login', function () {
         it('should login successfully if correct email and password provided', function (done) {

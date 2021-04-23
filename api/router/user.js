@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const checkRegisterEmailVaild = require('../../middlewares/checkEmail');
-const { emailVerification, signUp, login } = require('../../controllers/user');
+const { login, logout, queryUserInfo } = require('../../controllers/user');
 
-router.get('/email-verification', emailVerification);
-router.post('/signup', checkRegisterEmailVaild, signUp);
+// router.get('', emailVerification);
+// router.get('/email-verification', emailVerification);
 router.post('/login', login);
+router.get('/logout', logout);
+router.get('', queryUserInfo);
 
 module.exports = router;
